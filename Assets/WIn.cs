@@ -9,7 +9,8 @@ public class WinCondition : MonoBehaviour
     {
         if (hasWon) return;
         float distance = Vector3.Distance(player.position, goal.position);
-        if (distance <= winDistance)
+        Debug.Log(distance);
+        if (distance <= winDistance) 
         {
             hasWon = true;
             WinGame();

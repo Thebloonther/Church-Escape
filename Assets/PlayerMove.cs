@@ -1,21 +1,19 @@
 using UnityEngine;
 
-public class NewMonoBehaviourScript : MonoBehaviour
+public class PlayerMove_Velocity : MonoBehaviour
 {
-    public float moveSpeed = 5f;
-    public int testValue = 168;
+    public float speed = 6f;
+    Rigidbody rb;
 
-    void Update()
+    void Awake() => rb = GetComponent<Rigidbody>();
+
+    void FixedUpdate()
     {
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
+        Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
+        Vector3 v = new Vector3(input.x, 0f, input.y) * speed;
 
-        Vector3 movement = new Vector3(x, 0f, z);
-        Debug.Log("This is Movement Vector:" + movement);
-        transform.Translate(movement * moveSpeed * Time.deltaTime, Space.Self);
-    }
-
-    void TestFunc()
-    {
+        // Unity 6+ uses linearVelocity; older Unity uses velocity
+        rb.linearVelocity = new Vector3(v.x, rb.linearVelocity.y, v.z);
+        // rb.velocity = new Vector3(v.x, rb.velocity.y, v.z);
     }
 }
